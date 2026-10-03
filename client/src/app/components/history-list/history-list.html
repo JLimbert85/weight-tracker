@@ -1,5 +1,5 @@
-<div class="p-2 h-full overflow-auto">
-  @for (weight of weights(); track weight) {
+<div class="max-h-full overflow-auto">
+  @for (weight of weights; track weight._id) {
     <app-history-list-item [weight]="weight" />
   }
 </div>

@@ -1,10 +1,22 @@
-<mat-card class="flex items-center w-full max-w-sm mx-auto mt-4">
-  <mat-card-content>
-    <p class="text-xl font-medium text-gray-600">
-      Weight Loss Target: <br />
-      Weight Loss So Far: <br />
-      Weight Left To Lose: <br />
-      Start Date: <br />
-    </p>
+<mat-card class="flex items-center w-full max-w-sm min-w-sm mx-auto mt-4">
+  <mat-card-content class="w-full">
+    <div class="text-xl font-medium text-gray-600 flex flex-col w-full gap-2">
+      <div class="flex flex-row px-4 justify-between">
+        <div>Weight Loss Target:</div>
+        <div>{{ lossTargetText() }}</div>
+      </div>
+      <div class="flex flex-row px-4 justify-between">
+        <div>Weight Loss So Far:</div>
+        <div>{{ lostSoFarText() }}</div>
+      </div>
+      <div class="flex flex-row px-4 justify-between">
+        <div>Weight Left To Lose:</div>
+        <div>{{ leftToLoseText() }}</div>
+      </div>
+      <div class="flex flex-row px-4 justify-between">
+        <div>Start Date:</div>
+        <div>{{ startDateText() }}</div>
+      </div>
+    </div>
   </mat-card-content>
 </mat-card>

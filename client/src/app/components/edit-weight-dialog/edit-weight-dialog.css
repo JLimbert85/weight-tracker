@@ -1,0 +1,35 @@
+/* Target the wrapper class in your component scss or global styles */
+.dialog-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ensure global Material container transitions size changes gracefully */
+::ng-deep .cdk-overlay-pane {
+  transition: all 0.3s ease-in-out;
+}
+
+.mat-icon {
+  color: var(--mat-sys-error);
+}
+
+.error-text {
+  color: var(--mat-sys-error);
+}
+
+.enter-animation {
+  animation: fadeSlideIn 250ms ease-out forwards;
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

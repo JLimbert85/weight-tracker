@@ -47,6 +47,7 @@ export class AddWeightDialog {
 
   onSubmit(): void {
     let newWeight: Weight = {
+      _id: '',
       weight: Number.parseInt(this.weight()),
       recordedDate: this.date.value || new Date(),
     };

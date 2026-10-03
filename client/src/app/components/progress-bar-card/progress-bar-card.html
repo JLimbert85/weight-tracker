@@ -1,34 +1,48 @@
-<mat-card class="flex items-center w-full max-w-sm mx-auto mt-4">
+<mat-card class="flex items-center w-full max-w-sm min-w-sm mx-auto mt-4">
   <mat-card-header>
     <mat-card-title>Progress</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <div class="relative flex flex-col items-center justify-end w-48 h-24 overflow-hidden">
-      <svg class="w-full h-full" viewBox="0 0 100 50">
-        <!-- Background Arc (Curves Upward) -->
-        <path
-          d="M 10,50 A 40,40 0 0,1 90,50"
-          class="text-gray-200 stroke-current"
-          stroke-width="10"
-          fill="none"
-          stroke-linecap="round"
-        ></path>
-        <!-- Progress Arc -->
-        <path
-          d="M 10,50 A 40,40 0 0,1 90,50"
-          class="text-indigo-600 stroke-current transition-all duration-500 ease-out"
-          stroke-width="10"
-          stroke-linecap="round"
-          [attr.stroke-dasharray]="circumference"
-          [attr.stroke-dashoffset]="strokeDashoffset"
-          fill="none"
-        ></path>
-      </svg>
-      <!-- Centered Text positioned at the bottom baseline -->
+    <div class="w-fulll max-w-md mx-auto">
+      <div class="relative w-full overflow-hidden aspect-2/1">
+        <svg class="w-full h-full" viewBox="0 0 100 50">
+          <!-- Background Arc (Curves Upward) -->
+          <path
+            d="M 10,50 A 40,40 0 0,1 90,50"
+            class="text-gray-200 stroke-current"
+            stroke-width="10"
+            fill="none"
+            stroke-linecap="round"
+          ></path>
+          <!-- Progress Arc -->
+          <path
+            d="M 10,50 A 40,40 0 0,1 90,50"
+            class="text-indigo-600 stroke-current transition-all duration-500 ease-out"
+            stroke-width="10"
+            stroke-linecap="round"
+            [attr.stroke-dasharray]="circumference"
+            [attr.stroke-dashoffset]="strokeDashoffset"
+            fill="none"
+          ></path>
+        </svg>
+        <!-- Centered Text positioned at the bottom baseline -->
+        <div
+          class="absolute bottom-0 left-0 right-0 flex items-baseline justify-center text-center text-xl font-medium text-gray-700 mb-1"
+        >
+          Current Weight <br />
+          {{ currentWeight }} Lbs
+        </div>
+      </div>
     </div>
-    <div class="flex justify-between w-full bottom-0 pt-2 text-xl font-semibold text-gray-700">
-      <div>Start</div>
-      <div>Goal</div>
+    <div class="flex justify-between w-full bottom-0 pt-2 text-xl font-medium text-gray-700">
+      <div class="text-center">
+        Start <br />
+        {{ startWeightText() }}
+      </div>
+      <div class="text-center">
+        Goal <br />
+        {{ goalWeightText() }}
+      </div>
     </div>
   </mat-card-content>
 </mat-card>

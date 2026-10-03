@@ -5,7 +5,7 @@
         Weight: {{ weight().weight }} <br />
         Date: {{ formattedDate() }}
       </div>
-      <button matIconButton>
+      <button matIconButton (click)="onEditWeight()">
         <mat-icon>edit</mat-icon>
       </button>
     </div>

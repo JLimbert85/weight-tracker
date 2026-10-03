@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, inject, Input, OnDestroy, OnInit, signal } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { Weight } from '../../interfaces/weight';
 import { WeightService } from '../../services/weight-service';
@@ -11,40 +11,44 @@ import { Subscription } from 'rxjs';
   styleUrl: './history-list.css',
   templateUrl: './history-list.html',
 })
-export class HistoryList implements OnInit, OnDestroy {
-  weights = signal<Weight[]>([]);
-  private sub!: Subscription;
-  private weightService = inject(WeightService);
+export class HistoryList {
+  @Input() weights: Weight[] = [];
+  // private sub!: Subscription;
+  // protected weightService = inject(WeightService);
 
-  ngOnInit(): void {
-    this.getWeights();
-    this.sub = this.weightService.getChanges().subscribe((change) => {
-      if (change.operationType === 'insert') {
-        this.weights.set([...this.weights(), change.fullDocument]);
-        this.weights().sort(
-          (a: Weight, b: Weight) =>
-            new Date(b.recordedDate).getDate() - new Date(a.recordedDate).getDate(),
-        );
-      }
-    });
-  }
+  // ngOnInit(): void {
+  //   this.weightService.getWeights();
+  // }
 
-  ngOnDestroy() {
-    this.sub.unsubscribe();
-  }
+  // ngOnInit(): void {
+  //   this.getWeights();
+  //   this.sub = this.weightService.getChanges().subscribe((change) => {
+  //     if (change.operationType === 'insert') {
+  //       this.weights.set([...this.weights(), change.fullDocument]);
+  // this.weights().sort(
+  //   (a: Weight, b: Weight) =>
+  //     new Date(b.recordedDate).getDate() - new Date(a.recordedDate).getDate(),
+  // );
+  //     }
+  //   });
+  // }
 
-  private getWeights(): void {
-    this.weightService.getWeights().subscribe({
-      next: (value: Weight[]) => {
-        this.weights.set(value);
-        this.weights().sort(
-          (a: Weight, b: Weight) =>
-            new Date(b.recordedDate).getDate() - new Date(a.recordedDate).getDate(),
-        );
-      },
-      error: (err) => {
-        console.log('Error: ' + err);
-      },
-    });
-  }
+  // ngOnDestroy() {
+  //   this.sub.unsubscribe();
+  // }
+
+  // private getWeights(): void {
+  //   this.weightService.getWeights().subscribe({
+  //     next: (value: Weight[]) => {
+  //       this.weights.set(value);
+  //       this.weights().sort(
+  //         (a: Weight, b: Weight) =>
+  //           new Date(b.recordedDate).getDate() - new Date(a.recordedDate).getDate(),
+  //       );
+  //     },
+  //     error: (err) => {
+  //       console.log('Error: ' + err);
+  //     },
+  //   });
+  // }
 }
