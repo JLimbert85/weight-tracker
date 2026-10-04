@@ -13,6 +13,7 @@ import { HistoryList } from '../history-list/history-list';
 import { Router } from '@angular/router';
 import { WeightService } from '../../services/weight-service';
 import { MatButton } from '@angular/material/button';
+import { HistoryChart } from '../history-chart/history-chart';
 
 @Component({
   imports: [
@@ -25,6 +26,7 @@ import { MatButton } from '@angular/material/button';
     OverviewCard,
     AddWeightButton,
     HistoryList,
+    HistoryChart,
   ],
   selector: 'app-home',
   styleUrl: './home.css',
