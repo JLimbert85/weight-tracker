@@ -17,7 +17,7 @@ mat-tab-group {
 }
 
 /* 4. Let your specific tab content layout expand completely */
-.tab-content {
+tab-content {
   flex-grow: 1;
-  overflow: auto; /* Adds scrollbars to content if it overflows the screen */
+  overflow: scroll; /* Adds scrollbars to content if it overflows the screen */
 }

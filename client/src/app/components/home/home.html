@@ -12,21 +12,14 @@
         [goalWeight]="weightService.goalWeight()"
         [currentWeight]="weightService.currentWeight()"
       />
-      @if (weightService.goalWeight() == undefined) {
-        <div class="flex items-center w-full max-w-sm mx-auto mt-4">
-          <button matButton="filled" class="w-full">
-            <div class="text-xl">Set Goal Weight</div>
-          </button>
-        </div>
-      }
-
       <app-overview-card
         [lossTarget]="weightService.lossTarget()"
         [lostSoFar]="weightService.lostSoFar()"
         [leftToLose]="weightService.leftToLose()"
         [startDate]="weightService.startDate()"
+        [heightInInches]="weightService.heightInInches()"
+        [BMI]="weightService.BMI()"
       />
-
       <app-add-weight-button />
     </mat-tab>
     <mat-tab>
@@ -36,53 +29,43 @@
           <span>History</span>
         </div>
       </ng-template>
-      <app-history-list [weights]="weightService.weights()" />
-    </mat-tab>
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <div class="flex flex-col items-center justify-center gap-1">
-          <mat-icon>settings</mat-icon>
-          <span>Settings</span>
+      <div class="w-full h-full flex flex-col">
+        <div class="w-full h-[35%] p-4">
+          <app-history-chart />
         </div>
-      </ng-template>
-      <div class="p-4">
-        <p class="text-xl font-medium text-gray-600">Settings</p>
-      </div>
-    </mat-tab></mat-tab-group
-  >
+        <div class="flex-1 min-h-0 w-full overflow-y-scroll pb-2">
+          <app-history-list [weights]="weightService.weights()" />
+        </div>
+      </div> </mat-tab
+  ></mat-tab-group>
 } @else {
   <mat-grid-list cols="3" rowHeight="50%" gutterSize="0">
     <mat-grid-tile [rowspan]="2">
-      <div class="bg-amber-300 w-full h-full">
+      <div class="w-full h-full">
         <app-progress-bar-card
           [startWeight]="weightService.startWeight()"
           [goalWeight]="weightService.goalWeight()"
           [currentWeight]="weightService.currentWeight()"
         />
-        @if (weightService.goalWeight() == undefined) {
-          <div class="flex items-center w-full max-w-sm mx-auto mt-4">
-            <button matButton="filled" class="w-full">
-              <div class="text-xl">Set Goal Weight</div>
-            </button>
-          </div>
-        }
         <app-overview-card
           [lossTarget]="weightService.lossTarget()"
           [lostSoFar]="weightService.lostSoFar()"
           [leftToLose]="weightService.leftToLose()"
           [startDate]="weightService.startDate()"
+          [heightInInches]="weightService.heightInInches()"
+          [BMI]="weightService.BMI()"
         />
         <app-add-weight-button />
       </div>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="2">
-      <div class="w-full h-full bg-amber-200">
-        <app-history-list [weights]="weightService.weights()" />
+      <div class="h-full w-full p-4">
+        <app-history-chart />
       </div>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="2">
-      <div class="h-full w-full p-4 bg-amber-400">
-        <app-history-chart />
+      <div class="w-full h-full overflow-y-scroll pb-2">
+        <app-history-list [weights]="weightService.weights()" />
       </div>
     </mat-grid-tile>
   </mat-grid-list>

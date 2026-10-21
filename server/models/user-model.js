@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
     hash: String,
     salt: String,
     goalWeight: Number,
+    heightInInches: Number,
 });
 
 // Method to set the password as hash and salt for a user

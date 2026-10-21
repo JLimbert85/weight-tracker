@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>Set Goal Weight</h2>
+<mat-dialog-content>
+  <ol>
+    <li>
+      <mat-form-field appearance="outline" subscriptSizing="dynamic" class="p-2">
+        <mat-label>Goal Weight</mat-label>
+        <input matInput [(ngModel)]="weight" />
+      </mat-form-field>
+    </li>
+  </ol>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button matButton mat-dialog-close>Cancel</button>
+  <button matButton (click)="onSubmit()">Submit</button>
+</mat-dialog-actions>

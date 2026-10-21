@@ -2,4 +2,5 @@ export interface User {
   _id: string;
   email: string;
   goalWeight: number | undefined;
+  heightInInches: number | undefined;
 }

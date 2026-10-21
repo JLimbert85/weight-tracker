@@ -1,0 +1,30 @@
+<form (ngSubmit)="onSave()">
+  <h2 mat-dialog-title>Update Measurements</h2>
+  <mat-dialog-content>
+    <p>Update your height and goal weight</p>
+    <ol>
+      <li>
+        <mat-form-field
+          appearance="outline"
+          floatLabel="always"
+          subscriptSizing="dynamic"
+          class="p-2"
+        >
+          <mat-label>Height</mat-label>
+          <app-height-input [(ngModel)]="height" name="height" #heightInput="ngModel">
+          </app-height-input>
+        </mat-form-field>
+      </li>
+      <li>
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="p-2">
+          <mat-label>Goal Weight</mat-label>
+          <input matInput [(ngModel)]="goalWeight" name="goalWeight" />
+        </mat-form-field>
+      </li>
+    </ol>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button matButton matDialogClose>Cancel</button>
+    <button matButton type="submit" cdkFocusInitial>Ok</button>
+  </mat-dialog-actions>
+</form>

@@ -47,9 +47,9 @@ app.use(function (err, req, res, next) {
 //     console.log(`Server is running on port: ${port}`);
 // });
 
-const http = require("http");
+// const http = require("http");
 // const Weight = require("./models/weight-model");
-const server = http.createServer(app);
+// const server = http.createServer(app);
 // const { Server } = require("socket.io");
 
 // const io = new Server(server, { cors: { origin: "*" } });
@@ -70,6 +70,6 @@ const server = http.createServer(app);
 //     });
 // });
 
-server.listen(port);
+app.listen(port);
 
 module.exports = app;

@@ -1,18 +1,17 @@
 import { Dl as ɵɵdefineInjector, Ec as InjectionToken, En as ElementRef, Fc as NgZone, In as Input, O as booleanAttribute, Wi as setClassMetadata, Yo as ɵɵlistener, ir as Renderer2, la as ɵɵNgOnChangesFeature, mo as ɵɵdomProperty, no as ɵɵdefineDirective, qn as NgModule, ro as ɵɵdefineNgModule, sl as inject, tl as effect, ua as ɵɵProvidersFeature, ul as isSignal, wn as Directive, xa as ɵɵclassProp, ya as ɵɵattribute } from "./core-CVHS-hD8.js";
 import { Qn as Subject } from "./esm5-ChK3bs0s.js";
+import { t as coerceBooleanProperty } from "./coercion-COuovbg1.js";
 import { t as BidiModule } from "./bidi-BIOWbFqv.js";
+import { d as _IdGenerator } from "./a11y-DO1YVWns.js";
 import "./common-BYydZyTD.js";
 import { t as Platform } from "./_platform-chunk--QuiYe-P.js";
 import { AutofillMonitor, TextFieldModule } from "./@angular_cdk_text-field.js";
 import { FormGroupDirective, NgControl, NgForm, Validators } from "./@angular_forms.js";
-import "./_animation-chunk-D6NlKNGa.js";
-import { t as _IdGenerator } from "./_id-generator-chunk-C7F9aB7K.js";
 import { t as getSupportedInputTypes } from "./platform-00VocxFo.js";
-import { t as coerceBooleanProperty } from "./coercion-COuovbg1.js";
 import { n as ErrorStateMatcher, t as _ErrorStateTracker } from "./_error-state-chunk-D15ok3hJ.js";
 import { n as MAT_INPUT_VALUE_ACCESSOR, t as FORM_FIELD } from "./signals-4TV9kJbD.js";
 import "./observers-private-a0yodvOc.js";
-import { c as MatFormFieldControl, d as MatPrefix, f as MatSuffix, l as MatHint, n as MAT_FORM_FIELD, o as MatError, s as MatFormField, u as MatLabel } from "./_form-field-chunk-CDhVuYiL.js";
+import { c as MatFormFieldControl, d as MatPrefix, f as MatSuffix, l as MatHint, n as MAT_FORM_FIELD, o as MatError, s as MatFormField, u as MatLabel } from "./_form-field-chunk-CYvT0V9K.js";
 import { MatFormFieldModule } from "./@angular_material_form-field.js";
 //#region node_modules/@angular/material/fesm2022/input.mjs
 function getMatInputUnsupportedTypeError(type) {

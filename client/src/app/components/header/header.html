@@ -1,4 +1,23 @@
-<mat-toolbar class="z-2 flex justify-between">
+<mat-toolbar class="flex justify-between">
   <h1 class="ml-2">Weight Tracker</h1>
-  <button matButton="filled" (click)="onLogout()">Sign Out</button>
+  @if (authService.isLoggedIn()) {
+    <button
+      matIconButton
+      matExpIconButton
+      appearance="filled"
+      [matMenuTriggerFor]="profileMenu"
+      #menuTrigger
+    >
+      <mat-icon>person</mat-icon>
+    </button>
+    <mat-menu #profileMenu="matMenu">
+      <button mat-menu-item (click)="onSettings()">
+        <mat-icon>measuring_tape</mat-icon>Measurements
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item class="logout-button" (click)="onLogout()">
+        <mat-icon>logout</mat-icon>Logout
+      </button>
+    </mat-menu>
+  }
 </mat-toolbar>

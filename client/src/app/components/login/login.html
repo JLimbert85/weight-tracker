@@ -1,31 +1,45 @@
-<div>
+<form (ngSubmit)="onLoginSubmit()">
   <mat-card class="flex items-center w-full h-full max-w-sm mx-auto mt-10">
     <mat-card-header>
       <mat-card-title>Login</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      @if (formError) {
-        <mat-error>
-          {{ formError }}
+      @if (formError()) {
+        <mat-error class="text-center">
+          {{ formError() }}
         </mat-error>
       }
       <ol>
         <li>
           <mat-form-field appearance="outline" subscriptSizing="dynamic" class="p-2">
             <mat-label>Email</mat-label>
-            <input matInput type="email" [(ngModel)]="credentials.email" />
+            <input matInput type="email" [(ngModel)]="credentials.email" name="email" />
           </mat-form-field>
         </li>
         <li>
           <mat-form-field appearance="outline" subscriptSizing="dynamic" class="p-2">
             <mat-label>Password</mat-label>
-            <input matInput type="password" [(ngModel)]="credentials.password" />
+            <input matInput type="password" [(ngModel)]="credentials.password" name="password" />
           </mat-form-field>
         </li>
       </ol>
     </mat-card-content>
-    <mat-card-actions align="end">
-      <button matButton (click)="onLoginSubmit()">Submit</button>
+    <mat-card-actions>
+      <div class="flex flex-col gap-4">
+        <a class="text-blue-500 hover:text-blue-700" [routerLink]="['/register']"
+          >Don't have an account? Register</a
+        >
+        <button matButton="filled" type="submit" [showProgress]="showSpinner()">
+          Submit
+          <mat-progress-spinner
+            progressIndicator
+            mode="indeterminate"
+            diameter="20"
+            aria-label="Loading"
+            tabindex=""
+          />
+        </button>
+      </div>
     </mat-card-actions>
   </mat-card>
-</div>
+</form>

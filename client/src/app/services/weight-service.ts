@@ -1,18 +1,16 @@
 import { HttpClient } from '@angular/common/http';
-import { computed, inject, OnDestroy, Service, signal } from '@angular/core';
-import { catchError, Observable, of, tap } from 'rxjs';
+import { computed, inject, Service, signal } from '@angular/core';
+import { catchError, of, tap } from 'rxjs';
 import { Weight } from '../interfaces/weight';
-import { io, Socket } from 'socket.io-client';
-import { AuthResponse } from '../interfaces/auth-response';
 import { User } from '../interfaces/user';
+import { AuthenticationService } from './authentication-service';
 
 @Service()
 export class WeightService {
   private http = inject(HttpClient);
-  // private socket!: Socket;
-  // private socketUrl = 'http://localhost:3000';
   private weightsSignal = signal<Weight[]>([]);
   private userSignal = signal<User | undefined>(undefined);
+  private authService = inject(AuthenticationService);
 
   weights = this.weightsSignal.asReadonly();
   currentWeight = computed(() =>
@@ -27,6 +25,14 @@ export class WeightService {
     this.weights().length > 0 ? this.weights()[this.weights().length - 1].weight : undefined,
   );
   goalWeight = computed(() => (this.user() ? this.user()!.goalWeight : undefined));
+  heightInInches = computed(() => (this.user() ? this.user()!.heightInInches : undefined));
+  BMI = computed(() => {
+    if (this.heightInInches() === undefined || this.currentWeight() === undefined) {
+      return undefined;
+    } else {
+      return (this.currentWeight()! / Math.pow(this.heightInInches()!, 2)) * 703;
+    }
+  });
   user = this.userSignal.asReadonly();
   lossTarget = computed(() => {
     return this.weights().length > 0 && this.goalWeight()
@@ -92,7 +98,6 @@ export class WeightService {
   }
 
   addWeight(weight: Weight): void {
-    console.log(weight._id);
     if (
       this.weights().some(
         (w) =>
@@ -128,38 +133,53 @@ export class WeightService {
   }
 
   updateGoalWeight(user: User, goalWeight: number) {
-    user.goalWeight = goalWeight;
-    this.http.put<User>(`${this.baseUrl}/${user._id}`, user).subscribe((value) => {
+    const updatedUser = { ...user, goalWeight: goalWeight };
+    this.http.put<User>(`${this.baseUrl}/users/${user._id}`, updatedUser).subscribe((value) => {
       console.log('User updated: ', value);
+      this.getUser(user._id);
     });
   }
 
-  logIn(user: User, passwd: string): Observable<AuthResponse> {
-    return this.handleAuthAPICall('login', user, passwd);
+  updateHeight(user: User, heightInInches: number) {
+    const updatedUser = { ...user, heightInInches: heightInInches };
+    this.http.put<User>(`${this.baseUrl}/users/${user._id}`, updatedUser).subscribe((value) => {
+      console.log('User updated: ', value);
+      this.getUser(user._id);
+    });
   }
 
-  register(user: User, passwd: string): Observable<AuthResponse> {
-    return this.handleAuthAPICall('register', user, passwd);
-  }
+  // logIn(user: User, passwd: string): Observable<HttpResponse<AuthResponse>> {
+  //   return this.handleAuthAPICall('login', user, passwd);
+  // }
 
-  handleAuthAPICall(endpoint: string, user: User, passwd: string): Observable<AuthResponse> {
-    let formData = {
-      email: user.email,
-      password: passwd,
-    };
-    return this.http.post<AuthResponse>(`${this.baseUrl}/${endpoint}`, formData);
-  }
+  // register(user: User, passwd: string): Observable<HttpResponse<AuthResponse>> {
+  //   return this.handleAuthAPICall('register', user, passwd);
+  // }
+
+  // handleAuthAPICall(
+  //   endpoint: string,
+  //   user: User,
+  //   passwd: string,
+  // ): Observable<HttpResponse<AuthResponse>> {
+  //   let formData = {
+  //     email: user.email,
+  //     password: passwd,
+  //   };
+  //   return this.http.post<AuthResponse>(`${this.baseUrl}/${endpoint}`, formData, {
+  //     observe: 'response',
+  //   });
+  // }
 
   getUser(userId: string): void {
     this.http
       .get<User>(`${this.baseUrl}/users/${userId}`)
       .pipe(
         tap((user) => {
-          console.log('User found: ', user);
           this.userSignal.set(user);
         }),
         catchError((error) => {
           console.error('Failed to load user', error);
+          this.authService.logout();
           return of(undefined);
         }),
       )

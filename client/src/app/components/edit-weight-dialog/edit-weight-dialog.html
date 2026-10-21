@@ -1,33 +1,41 @@
 <div class="dialog-wrapper">
   @if (!confirmDelete()) {
     <div animate.enter="enter-animation">
-      <h2 mat-dialog-title>Edit Weight</h2>
-      <mat-dialog-content>
-        <ol>
-          <li>
-            <mat-form-field appearance="outline" subscriptSizing="dynamic" class="p-2">
-              <mat-label>Weight</mat-label>
-              <input matInput [(ngModel)]="weight" />
-            </mat-form-field>
-          </li>
-          <li>
-            <mat-form-field appearance="outline" subscriptSizing="dynamic" class="p-2">
-              <mat-label>Select a date</mat-label>
-              <input matInput [max]="maxDate" [matDatepicker]="picker" [formControl]="date" />
-              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-          </li>
-        </ol>
-      </mat-dialog-content>
-      <mat-dialog-actions>
-        <button matButtonIcon (click)="onDelete()" color="warn">
-          <mat-icon>delete</mat-icon>
-        </button>
-        <span class="flex-1"></span>
-        <button matButton mat-dialog-close>Cancel</button>
-        <button matButton (click)="onSubmit()">Submit</button>
-      </mat-dialog-actions>
+      <form (ngSubmit)="onSubmit()">
+        <h2 mat-dialog-title>Edit Weight</h2>
+        <mat-dialog-content>
+          <ol>
+            <li>
+              <mat-form-field appearance="outline" subscriptSizing="dynamic" class="p-2">
+                <mat-label>Weight</mat-label>
+                <input matInput [(ngModel)]="weight" name="weight" />
+              </mat-form-field>
+            </li>
+            <li>
+              <mat-form-field appearance="outline" subscriptSizing="dynamic" class="p-2">
+                <mat-label>Select a date</mat-label>
+                <input
+                  matInput
+                  [max]="maxDate"
+                  [matDatepicker]="picker"
+                  [formControl]="date"
+                  name="date"
+                />
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </li>
+          </ol>
+        </mat-dialog-content>
+        <mat-dialog-actions>
+          <button matButtonIcon (click)="onDelete()" color="warn">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <span class="flex-1"></span>
+          <button matButton mat-dialog-close>Cancel</button>
+          <button matButton (click)="onSubmit()">Submit</button>
+        </mat-dialog-actions>
+      </form>
     </div>
   } @else {
     <div animate.enter="enter-animation">

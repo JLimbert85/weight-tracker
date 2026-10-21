@@ -15,10 +15,22 @@ import { EditWeightDialog } from '../edit-weight-dialog/edit-weight-dialog';
 export class HistoryListItem {
   readonly dialog = inject(MatDialog);
   weight = input.required<Weight>();
+  arrowIcon = input<string>('');
 
   formattedDate = computed(() => {
     const date = new Date(this.weight().recordedDate);
     return date.toDateString();
+  });
+
+  iconColor = computed(() => {
+    const icon = this.arrowIcon();
+    if (icon === 'arrow_upward') {
+      return 'red';
+    }
+    if (icon === 'arrow_downward') {
+      return 'green';
+    }
+    return 'black';
   });
 
   onEditWeight() {

@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthenticationService } from '../../services/authentication-service';
 import { MatIconModule } from '@angular/material/icon';
@@ -12,7 +12,6 @@ import { AddWeightButton } from '../add-weight-button/add-weight-button';
 import { HistoryList } from '../history-list/history-list';
 import { Router } from '@angular/router';
 import { WeightService } from '../../services/weight-service';
-import { MatButton } from '@angular/material/button';
 import { HistoryChart } from '../history-chart/history-chart';
 
 @Component({
@@ -21,7 +20,6 @@ import { HistoryChart } from '../history-chart/history-chart';
     MatTabsModule,
     MatToolbarModule,
     MatGridListModule,
-    MatButton,
     ProgressBarCard,
     OverviewCard,
     AddWeightButton,
@@ -40,16 +38,7 @@ export class Home {
   isMobile = signal(false);
   navOpen = signal(false);
   selectedNavItem = signal('Home');
-  navItems = ['Home', 'History', 'Settings'];
-
-  // weights = computed(() => this.weightService.weights());
-  userId = this.authService.getCurrentUserId();
-  // goalWeight = computed(() => this.weightService.user()?.goalWeight);
-  // startWeight = computed(() => this.weightService.weights().at(-1)?.weight);
-  // currentWeight = computed(() => this.weightService.weights().at(0)?.weight);
-  // startDate = computed(() =>
-  //   new Date(this.weightService.weights().at(-1)?.recordedDate || '').toDateString(),
-  // );
+  navItems = ['Home', 'History'];
 
   constructor(private breakpointObserver: BreakpointObserver) {
     this.breakpointObserver
@@ -57,14 +46,22 @@ export class Home {
       .subscribe((result) => {
         this.isMobile.set(result.matches);
       });
+
+    effect(() => {
+      if (!this.authService.isLoggedIn()) {
+        this.router.navigateByUrl('/login');
+      }
+    });
   }
 
   ngOnInit(): void {
     if (!this.authService.isLoggedIn()) {
+      console.log('User is not logged in');
       this.router.navigateByUrl('/login');
+    } else {
+      this.weightService.getUser(this.authService.getCurrentUserId());
+      this.weightService.getWeights();
     }
-    this.weightService.getUser(this.userId);
-    this.weightService.getWeights();
   }
 
   onSelectNavItem = (selectedItem: string) => {

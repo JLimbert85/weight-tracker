@@ -1,6 +1,6 @@
 import { Dl as ɵɵdefineInjector, Dr as ViewEncapsulation, Ea as ɵɵcontentQuery, Ec as InjectionToken, En as ElementRef, In as Input, Wi as setClassMetadata, Xo as ɵɵloadQuery, a as ContentChildren, as as ɵɵprojectionDef, cn as Component, do as ɵɵdomElementEnd, fo as ɵɵdomElementStart, is as ɵɵprojection, no as ɵɵdefineDirective, qn as NgModule, ro as ɵɵdefineNgModule, sl as inject, to as ɵɵdefineComponent, ua as ɵɵProvidersFeature, vs as ɵɵqueryRefresh, wn as Directive, ya as ɵɵattribute } from "./core-CVHS-hD8.js";
-import { i as Directionality, t as BidiModule } from "./bidi-BIOWbFqv.js";
 import { n as coerceNumberProperty } from "./_element-chunk-CGn0Mo4y.js";
+import { i as Directionality, t as BidiModule } from "./bidi-BIOWbFqv.js";
 import { n as MatLineModule, r as setLines, t as MatLine } from "./_line-chunk-jqyuDhDG.js";
 //#region node_modules/@angular/material/fesm2022/_public-api-chunk.mjs
 var TileCoordinator = class {

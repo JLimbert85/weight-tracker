@@ -11,6 +11,25 @@ const getUser = async (req, res) => {
     return res.status(200).json(user);
 };
 
+// PUT: /users/:userId - update user data
+const updateUser = async (req, res) => {
+    if (!req.auth) return res.status(401).json("Not Authorized");
+    const { goalWeight, heightInInches } = req.body;
+    try {
+        const updatedUser = await User.findByIdAndUpdate(
+            req.params.userId,
+            { goalWeight, heightInInches },
+            { new: true },
+        ).exec();
+        if (!updatedUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        return res.status(200).json(updatedUser);
+    } catch (error) {
+        return res.status(400).json({ message: error.message });
+    }
+};
+
 // GET: /weights - returns all weights
 const getWeights = async (req, res) => {
     if (!req.auth) return res.status(401).json("Not Authorized");
@@ -78,4 +97,11 @@ const deleteWeight = async (req, res) => {
     }
 };
 
-module.exports = { getWeights, addWeight, updateWeight, deleteWeight, getUser };
+module.exports = {
+    getWeights,
+    addWeight,
+    updateWeight,
+    deleteWeight,
+    getUser,
+    updateUser,
+};

@@ -50,6 +50,16 @@ router
     .put("/weights/:id", authenticateJWT, weightController.updateWeight);
 
 // GET: /users/:userId - returns the user from the id
-router.get("/users/:userId", authenticateJWT, weightController.getUser);
+// PUT: /users/:userId - update user data
+router
+    .get("/users/:userId", authenticateJWT, weightController.getUser)
+    .put("/users/:userId", authenticateJWT, weightController.updateUser);
+
+// GET: /users/:userId/check - checks if the user exists
+router.get(
+    "/users/:userId/check",
+    authenticateJWT,
+    authController.checkUserExists,
+);
 
 module.exports = router;

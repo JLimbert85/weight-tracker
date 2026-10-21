@@ -2,7 +2,8 @@ import { $n as Output, Al as ɵɵinject, Bt as computed, Dc as Injector, Di as p
 import { An as throwError, Ct as take, Dn as isObservable, En as EmptyError, In as EMPTY, Lt as catchError, Mn as from, Qn as Subject, Xt as filter, Zn as BehaviorSubject, b as switchMap, dn as concat, et as takeLast, g as takeUntil, hn as combineLatest, ir as pipe, jn as of, jt as concatMap, m as tap, mn as mergeMap, ot as finalize, pn as mergeAll, rr as Observable, rt as first, un as defer, ur as Subscription, vn as map, x as startWith } from "./esm5-ChK3bs0s.js";
 import { n as LOCATION_INITIALIZED, r as PlatformLocation } from "./_platform_location-chunk-DfgpFIWV.js";
 import { a as PRECOMMIT_HANDLER_SUPPORTED, c as Location, l as LocationStrategy, o as PlatformNavigation, r as ViewportScroller, t as NavigationAdapterForLocation, u as PathLocationStrategy } from "./common-BYydZyTD.js";
-import { P as HashLocationStrategy, s as Title } from "./platform-browser-noShkAz2.js";
+import { n as HashLocationStrategy } from "./_common_module-chunk-310_El1V.js";
+import { s as Title } from "./platform-browser-CuKF9EXG.js";
 //#region node_modules/@angular/router/fesm2022/_router-chunk.mjs
 /**
 * @license Angular v22.1.6

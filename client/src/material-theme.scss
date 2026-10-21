@@ -5,6 +5,17 @@
 // custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
 
+@use '@ngm-dev/mat-exp' as mat-exp;
+
+html {
+  @include mat-exp.mat-exp-button-styles();
+  @include mat-exp.mat-exp-icon-button-styles();
+  @include mat-exp.mat-exp-button-group-styles();
+  @include mat-exp.mat-exp-split-button-styles();
+  @include mat-exp.mat-exp-fab-menu-styles();
+  @include mat-exp.mat-exp-fab-menu-trigger-styles();
+}
+
 html {
   margin: 0;
   padding: 0;

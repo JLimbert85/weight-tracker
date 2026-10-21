@@ -9,16 +9,29 @@ const register = async (req, res) => {
 
     const user = new User({
         email: req.body.email,
+        goalWeight: req.body.goalWeight,
+        heightInInches: req.body.heightInInches,
     });
     user.setPassword(req.body.password);
-    const q = await user.save();
-
-    if (!q) {
-        return res.status(400).json({ message: "No data returned" });
-    } else {
+    try {
+        await user.save();
         const token = user.generateJWT();
-        return res.status(200).json(token);
+        return res.status(200).json({ token });
+    } catch (error) {
+        if (error.code === 11000) {
+            return res.status(400).json({ message: "User already exists" });
+        }
+        return res.status(400).json({
+            message: `Error occurred while registering: ${error.message}`,
+        });
     }
+
+    // if (!q) {
+    //     return res.status(400).json({ message: "No data returned" });
+    // } else {
+    //     const token = user.generateJWT();
+    //     return res.status(200).json({ token });
+    // }
 };
 
 const login = (req, res) => {
@@ -40,9 +53,42 @@ const login = (req, res) => {
             res.status(200).json({ token });
         } else {
             // Auth failed return error
-            res.status(401).json(info);
+            res.status(401).json({ message: info.message });
         }
     })(req, res);
 };
 
-module.exports = { register, login };
+const checkUserExists = async (req, res) => {
+    let token;
+
+    // 1. Extract token from the Authorization header
+    if (
+        req.headers.authorization &&
+        req.headers.authorization.startsWith("Bearer")
+    ) {
+        token = req.headers.authorization.split(" ")[1];
+    }
+
+    if (!token) {
+        return res
+            .status(401)
+            .json({ message: "Not authorized, no token provided" });
+    }
+
+    try {
+        const userExists = await User.exists({ _id: token.id });
+
+        if (!userExists) {
+            return res
+                .status(401)
+                .json({ message: "Not authorized, user no longer exists" });
+        }
+        return res.status(200).json({ message: "User exists" });
+    } catch (error) {
+        return res
+            .status(401)
+            .json({ message: "Not authorized, token failed or expired" });
+    }
+};
+
+module.exports = { register, login, checkUserExists };

@@ -1,9 +1,12 @@
 <mat-card class="flex w-full max-w-sm mx-auto mt-4">
   <mat-card-content>
     <div class="flex-row flex justify-between">
-      <div>
-        Weight: {{ weight().weight }} <br />
-        Date: {{ formattedDate() }}
+      <div class="flex items-center gap-4">
+        <mat-icon [style.color]="iconColor()">{{ arrowIcon() }}</mat-icon>
+        <div>
+          Weight: {{ weight().weight }} <br />
+          Date: {{ formattedDate() }}
+        </div>
       </div>
       <button matIconButton (click)="onEditWeight()">
         <mat-icon>edit</mat-icon>

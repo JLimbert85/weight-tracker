@@ -13,6 +13,32 @@ export class OverviewCard {
   @Input() lostSoFar: number | undefined;
   @Input() leftToLose: number | undefined;
   @Input() startDate: string | undefined;
+  @Input() heightInInches: number | undefined;
+  @Input() BMI: number | undefined;
+
+  heightInInchesText = () => {
+    if (this.heightInInches === undefined) {
+      return 'N/A';
+    }
+    return Math.floor(this.heightInInches / 12) + ' ft, ' + (this.heightInInches % 12) + ' in';
+  };
+
+  BMIText = () => {
+    if (this.BMI === undefined) {
+      return 'N/A';
+    }
+    if (this.BMI === undefined) {
+      return 'N/A';
+    } else if (this.BMI < 18.5) {
+      return this.BMI.toFixed(1) + ' (Underweight)';
+    } else if (this.BMI < 25) {
+      return this.BMI.toFixed(1) + ' (Healthy Weight)';
+    } else if (this.BMI < 30) {
+      return this.BMI.toFixed(1) + ' (Overweight)';
+    } else {
+      return this.BMI.toFixed(1) + ' (Obese)';
+    }
+  };
 
   lossTargetText = () => {
     if (this.lossTarget === undefined) {

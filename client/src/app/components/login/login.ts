@@ -1,12 +1,15 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { User } from '../../interfaces/user';
 import { AuthenticationService } from '../../services/authentication-service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { AuthResponse } from '../../interfaces/auth-response';
 
 @Component({
   imports: [
@@ -16,6 +19,8 @@ import { Router } from '@angular/router';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
+    RouterLink,
+    MatProgressSpinner,
   ],
   selector: 'app-login',
   styleUrl: './login.css',
@@ -24,16 +29,19 @@ import { Router } from '@angular/router';
 export class Login {
   authService = inject(AuthenticationService);
   router = inject(Router);
-  public formError: string = '';
+  public formError = signal('');
   credentials = {
     email: '',
     password: '',
   };
+  showSpinner = signal(false);
 
   public onLoginSubmit(): void {
-    this.formError = '';
+    this.formError.set('');
+    this.showSpinner.set(true);
     if (!this.credentials.email || !this.credentials.password) {
-      this.formError = 'All fields are required, please try again';
+      this.formError.set('All fields are required, please try again');
+      this.showSpinner.set(false);
     } else {
       this.doLogin();
     }
@@ -44,12 +52,38 @@ export class Login {
       email: this.credentials.email,
     } as User;
 
-    this.authService.login(newUser, this.credentials.password);
+    this.authService.login(newUser, this.credentials.password).subscribe({
+      next: (response: HttpResponse<AuthResponse>) => {
+        if (response.body) {
+          this.authService.saveToken(response.body.token);
+          this.authService.isLoggedIn.set(true);
+          this.router.navigateByUrl('/');
+        }
+      },
+      error: (error: HttpErrorResponse) => {
+        if ((error.status === 400 || error.status === 401) && error.error?.message) {
+          console.error('Error: ' + error.error.message);
+          this.formError.set(error.error.message);
+          this.showSpinner.set(false);
+        } else {
+          console.error('An unexpected error occurred. Please try again later.');
+          this.formError.set('An unexpected error occurred. Please try again later.');
+          this.showSpinner.set(false);
+        }
+      },
+    });
 
-    if (this.authService.isLoggedIn()) {
-      this.router.navigateByUrl('/');
-    } else {
-      this.formError = 'Invalid credentials';
-    }
+    // if (this.authService.isLoggedIn()) {
+    //   this.router.navigateByUrl('/');
+    // } else {
+    //   var timer = setTimeout(() => {
+    //     if (this.authService.isLoggedIn()) {
+    //       this.router.navigateByUrl('/');
+    //     } else {
+    //       this.formError.set('Invalid credentials');
+    //       this.showSpinner.set(false);
+    //     }
+    //   }, 3000);
+    // }
   }
 }
