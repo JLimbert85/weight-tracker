@@ -1,5 +1,6 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { inject, Service, signal } from '@angular/core';
+import { environment } from '../../environments/environment';
 import { BROWSER_STORAGE } from '../storage';
 import { AuthResponse } from '../interfaces/auth-response';
 import { User } from '../interfaces/user';
@@ -9,7 +10,7 @@ import { Observable } from 'rxjs';
 export class AuthenticationService {
   private storage = inject(BROWSER_STORAGE);
   private http = inject(HttpClient);
-  private baseUrl: string = 'http://localhost:3000/api';
+  private baseUrl: string = environment.apiUrl;
   isLoggedIn = signal(this.checkLoggedIn());
 
   authResp: AuthResponse = new AuthResponse();

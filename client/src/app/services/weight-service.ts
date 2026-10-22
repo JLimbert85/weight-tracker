@@ -4,6 +4,7 @@ import { catchError, of, tap } from 'rxjs';
 import { Weight } from '../interfaces/weight';
 import { User } from '../interfaces/user';
 import { AuthenticationService } from './authentication-service';
+import { environment } from '../../environments/environment';
 
 @Service()
 export class WeightService {
@@ -67,7 +68,7 @@ export class WeightService {
       : undefined;
   });
 
-  baseUrl: string = 'http://localhost:3000/api';
+  baseUrl: string = environment.apiUrl;
 
   // Fetches the weights from the server and updates the local state.
   getWeights(): void {
