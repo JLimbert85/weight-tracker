@@ -2,6 +2,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const User = require("../models/user-model");
 
+// Configure Passport with the local strategy for user authentication.
 passport.use(
     new LocalStrategy(
         {

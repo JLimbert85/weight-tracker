@@ -9,6 +9,7 @@ export const jwtInterceptor: HttpInterceptorFn = (
 ): Observable<HttpEvent<any>> => {
   const authenticationService = inject(AuthenticationService);
 
+  // If the user is logged in, attach the JWT token to the request headers.
   if (authenticationService.isLoggedIn()) {
     let token = authenticationService.getToken();
     const authReq = req.clone({
@@ -18,5 +19,6 @@ export const jwtInterceptor: HttpInterceptorFn = (
     });
     return next(authReq);
   }
+  // If the user is not logged in, pass the request through without adding the JWT token.
   return next(req);
 };

@@ -17,11 +17,14 @@ export class HistoryListItem {
   weight = input.required<Weight>();
   arrowIcon = input<string>('');
 
+  // Computed property to format the recorded date of the weight
   formattedDate = computed(() => {
     const date = new Date(this.weight().recordedDate);
     return date.toDateString();
   });
 
+  // Computed property to determine the color of the arrow icon based on the direction of weight change
+  // Returns 'red' for upward arrow, 'green' for downward arrow, and 'black' for equal or no arrow.
   iconColor = computed(() => {
     const icon = this.arrowIcon();
     if (icon === 'arrow_upward') {
@@ -33,16 +36,10 @@ export class HistoryListItem {
     return 'black';
   });
 
+  // Handle the edit weight action when the edit button is clicked
   onEditWeight() {
     const dialogRef = this.dialog.open(EditWeightDialog, {
       data: { weight: this.weight() },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        console.log('Weight updated:', result);
-        // Handle the updated weight here, e.g., call a service to update it in the backend
-      }
     });
   }
 }

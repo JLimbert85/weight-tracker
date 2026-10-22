@@ -36,6 +36,8 @@ export class MeasurementsDialog {
   goalWeight = signal(0);
 
   constructor() {
+    // Initialize the height and goal weight signals with existing values from the weight service if available
+    // This ensures that the dialog reflects the current user's measurements when it is opened
     if (this.weightService.goalWeight() !== undefined) {
       this.goalWeight.set(this.weightService.goalWeight()!);
     }
@@ -47,6 +49,9 @@ export class MeasurementsDialog {
     }
   }
 
+  // Handle the save action when the save button is clicked
+  // Update the user's height and goal weight if they have changed
+  // This ensures that the changes are only sent to the server if there are actual modifications
   onSave(): void {
     const { feet, inches } = this.height();
     const heightInInches = feet * 12 + inches;
@@ -55,7 +60,6 @@ export class MeasurementsDialog {
     } else {
       const user = this.weightService.user()!;
       if (this.weightService.heightInInches() !== heightInInches) {
-        console.log('Updating height for user:', heightInInches);
         this.weightService.updateHeight(user, heightInInches);
       }
       if (this.weightService.goalWeight() !== this.goalWeight()) {

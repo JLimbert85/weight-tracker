@@ -12,6 +12,9 @@ import { HistoryListItem } from '../history-list-item/history-list-item';
 export class HistoryList {
   @Input() weights: Weight[] = [];
 
+  // Determine the icon to display for a given weight compared to the next weight
+  // Returns 'equal' if weights are the same, 'arrow_upward' if the current weight is greater,
+  // 'arrow_downward' if the current weight is less, and '' if there is no next weight.
   setIcon = (weight: Weight, nextWeight?: Weight) => {
     if (nextWeight === undefined) {
       return '';

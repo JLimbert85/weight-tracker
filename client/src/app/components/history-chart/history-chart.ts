@@ -9,7 +9,6 @@ import {
   viewChild,
 } from '@angular/core';
 import * as echarts from 'echarts/core';
-import { EChartsCoreOption } from 'echarts/core';
 import { NgxEchartsDirective, provideEchartsCore } from 'ngx-echarts';
 import { LineChart } from 'echarts/charts';
 import {
@@ -46,6 +45,7 @@ export class HistoryChart implements AfterViewInit {
   resizeObserver: ResizeObserver | undefined;
 
   constructor() {
+    // Create effect to update chart when weight data changes
     effect(() => {
       const weights = this.weightService.weights();
       const goalWeight = this.weightService.goalWeight();

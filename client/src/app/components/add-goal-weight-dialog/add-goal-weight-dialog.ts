@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MatDialogActions,
@@ -37,7 +37,6 @@ export class AddGoalWeightDialog {
   authService = inject(AuthenticationService);
 
   onSubmit(): void {
-    console.log(this.weight(), this.weightService.user()!);
     this.weightService.updateGoalWeight(this.weightService.user()!, parseInt(this.weight()));
     this.dialogRef.close();
   }

@@ -36,6 +36,8 @@ export class Login {
   };
   showSpinner = signal(false);
 
+  // Handle the login form submission
+  // Validate the form fields and trigger the login process if valid
   public onLoginSubmit(): void {
     this.formError.set('');
     this.showSpinner.set(true);
@@ -47,6 +49,8 @@ export class Login {
     }
   }
 
+  // Perform the actual login request to the authentication service
+  // Handle the response and update the UI accordingly
   private doLogin(): void {
     let newUser = {
       email: this.credentials.email,
@@ -72,18 +76,5 @@ export class Login {
         }
       },
     });
-
-    // if (this.authService.isLoggedIn()) {
-    //   this.router.navigateByUrl('/');
-    // } else {
-    //   var timer = setTimeout(() => {
-    //     if (this.authService.isLoggedIn()) {
-    //       this.router.navigateByUrl('/');
-    //     } else {
-    //       this.formError.set('Invalid credentials');
-    //       this.showSpinner.set(false);
-    //     }
-    //   }, 3000);
-    // }
   }
 }

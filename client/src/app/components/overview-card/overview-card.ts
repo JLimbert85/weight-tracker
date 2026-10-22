@@ -1,6 +1,5 @@
-import { Component, inject, Input, signal } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { AuthenticationService } from '../../services/authentication-service';
 
 @Component({
   imports: [MatCardModule],
@@ -16,6 +15,8 @@ export class OverviewCard {
   @Input() heightInInches: number | undefined;
   @Input() BMI: number | undefined;
 
+  // Helper methods to format the display text for various fields in the overview card
+  // These methods ensure that the values are displayed in a user-friendly manner, handling undefined values and adding appropriate units or descriptions.
   heightInInchesText = () => {
     if (this.heightInInches === undefined) {
       return 'N/A';

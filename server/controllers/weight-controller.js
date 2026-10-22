@@ -1,7 +1,8 @@
 const Weight = require("../models/weight-model");
 const User = require("../models/user-model");
 
-// GET: /users/:userId- returns the user from the id
+// Controller for handling user-related operations, including fetching and updating user data.
+// Provides functions to get a user by ID, update a user by ID, and manage weight entries for the authenticated user.
 const getUser = async (req, res) => {
     if (!req.auth) return res.status(401).json("Not Authorized");
     const user = await User.findById(req.params.userId).exec();
@@ -11,7 +12,7 @@ const getUser = async (req, res) => {
     return res.status(200).json(user);
 };
 
-// PUT: /users/:userId - update user data
+// Controller for updating user data by ID.
 const updateUser = async (req, res) => {
     if (!req.auth) return res.status(401).json("Not Authorized");
     const { goalWeight, heightInInches } = req.body;
@@ -30,7 +31,7 @@ const updateUser = async (req, res) => {
     }
 };
 
-// GET: /weights - returns all weights
+// Controller for fetching all weight entries for the authenticated user.
 const getWeights = async (req, res) => {
     if (!req.auth) return res.status(401).json("Not Authorized");
     const q = await Weight.find({ userId: req.auth._id }).exec();
@@ -42,7 +43,7 @@ const getWeights = async (req, res) => {
     }
 };
 
-// POST: /weights - create a new weight entry
+// Controller for creating a new weight entry for the authenticated user.
 const addWeight = async (req, res) => {
     if (!req.auth) return res.status(401).json("Not Authorized");
     const { weight, recordedDate } = req.body;
@@ -60,7 +61,7 @@ const addWeight = async (req, res) => {
     }
 };
 
-// Put: /weights/:id - update a weight entry
+// Controller for updating a weight entry by ID for the authenticated user.
 const updateWeight = async (req, res) => {
     if (!req.auth) return res.status(401).json("Not Authorized");
     const { weight, recordedDate } = req.body;
@@ -79,7 +80,7 @@ const updateWeight = async (req, res) => {
     }
 };
 
-// DELETE: /weights/:id - delete a weight entry
+// Controller for deleting a weight entry by ID for the authenticated user.
 const deleteWeight = async (req, res) => {
     if (!req.auth) return res.status(401).json("Not Authorized");
     try {

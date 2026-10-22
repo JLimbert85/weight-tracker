@@ -29,7 +29,8 @@ function authenticateJWT(req, res, next) {
     next();
 }
 
-var weightController = require("../controllers/weight-controller");
+// Import the controllers for handling weight and authentication routes.
+const weightController = require("../controllers/weight-controller");
 const authController = require("../controllers/auth-controller");
 
 // // POST: /register - register a new user

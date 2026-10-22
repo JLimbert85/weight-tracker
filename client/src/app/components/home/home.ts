@@ -41,12 +41,16 @@ export class Home {
   navItems = ['Home', 'History'];
 
   constructor(private breakpointObserver: BreakpointObserver) {
+    // Observe changes in the viewport to determine if the layout should be mobile
+    // Update the isMobile signal accordingly
     this.breakpointObserver
       .observe([Breakpoints.XSmall, Breakpoints.Small, Breakpoints.Handset, Breakpoints.Tablet])
       .subscribe((result) => {
         this.isMobile.set(result.matches);
       });
 
+    // Create effect to redirect to login if the user is not logged in
+    // This ensures that the user cannot access the home page without being authenticated
     effect(() => {
       if (!this.authService.isLoggedIn()) {
         this.router.navigateByUrl('/login');
@@ -55,8 +59,9 @@ export class Home {
   }
 
   ngOnInit(): void {
+    // Check if the user is logged in and redirect to login if not
+    // This is an additional check in case the effect in the constructor does not catch it
     if (!this.authService.isLoggedIn()) {
-      console.log('User is not logged in');
       this.router.navigateByUrl('/login');
     } else {
       this.weightService.getUser(this.authService.getCurrentUserId());
@@ -64,6 +69,8 @@ export class Home {
     }
   }
 
+  // Handle the selection of a navigation item
+  // Update the selectedNavItem signal and close the navigation menu
   onSelectNavItem = (selectedItem: string) => {
     this.selectedNavItem.set(selectedItem);
     this.navOpen.set(false);

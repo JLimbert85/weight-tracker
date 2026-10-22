@@ -1,6 +1,11 @@
 const passport = require("passport");
 const User = require("../models/user-model");
 
+// Import the Passport configuration to ensure the local strategy is registered.
+require("../config/passport");
+
+// Controller for handling user authentication, including registration, login, and token validation.
+// Provides functions to register a new user, authenticate a user, and check if a user exists based on a JWT token.
 const register = async (req, res) => {
     // Validate message to ensure all params are present
     if (!req.body.email || !req.body.password) {
@@ -25,15 +30,10 @@ const register = async (req, res) => {
             message: `Error occurred while registering: ${error.message}`,
         });
     }
-
-    // if (!q) {
-    //     return res.status(400).json({ message: "No data returned" });
-    // } else {
-    //     const token = user.generateJWT();
-    //     return res.status(200).json({ token });
-    // }
 };
 
+// Controller for handling user login.
+// Validates the email and password, delegates authentication to Passport, and returns a JWT token on success.
 const login = (req, res) => {
     // Validate message to ensure that email and password are present
     if (!req.body.email || !req.body.password) {
@@ -58,6 +58,8 @@ const login = (req, res) => {
     })(req, res);
 };
 
+// Controller for checking if a user exists based on a JWT token.
+// Extracts the token from the Authorization header, verifies it, and checks if the user is still present in the database.
 const checkUserExists = async (req, res) => {
     let token;
 

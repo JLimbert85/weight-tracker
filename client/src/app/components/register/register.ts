@@ -42,6 +42,9 @@ export class Register {
   height = signal({ feet: 0, inches: 0 });
   showSpinner = signal(false);
 
+  // Handle the form submission for the register component
+  // This method validates the form inputs, updates the spinner state, and triggers the registration process if all validations pass.
+  // It also handles error messages and ensures that the user interface reflects the current state of the form submission.
   public onRegisterSubmit(): void {
     this.formError.set('');
     this.showSpinner.set(true);
@@ -63,6 +66,9 @@ export class Register {
     }
   }
 
+  // Perform the actual registration with the provided user data and password
+  // This method sends the registration request to the authentication service and handles the response, including saving the token and updating the login state.
+  // It also manages error handling and ensures that the spinner is updated appropriately during the registration process.
   private doRegister(): void {
     const { feet, inches } = this.height();
     const heightInInches = feet * 12 + inches;

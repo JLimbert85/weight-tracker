@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 
+// Define the schema for the user model.
+// This schema includes fields for email, hashed password, salt, goal weight, and height in inches.
 const userSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     hash: String,
@@ -41,5 +43,6 @@ userSchema.methods.generateJWT = function () {
     );
 };
 
+// Create the User model based on the userSchema.
 const User = mongoose.model("users", userSchema);
 module.exports = User;
